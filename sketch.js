@@ -22,8 +22,17 @@ let pressStartTimeCircle;
 let circleColor;
 
 let score = 0;
+let startTime = 0;
+let endTime = 0;
+let elapsedTime = 0;
+let isGameOver = false;
 
 let hasCollided = false;
+
+//time
+let timeAtScoreZero = 0;
+let timeAtScoreFive = 0;
+let duringTime = 0;
 
 function setup() {
   createCanvas(400, 400);
@@ -88,6 +97,29 @@ function draw() {
   fill(0);
   textSize(10);
   text(`Score: ${score}`, width - 50, 15);
+  text(`Time: ${elapsedTime.toFixed(2)}s`, 10, 15); // Display time in seconds with 2 decimal places
+
+  if (score === 0 && timeAtScoreZero === 0) {
+    timeAtScoreZero = millis();
+  }
+
+  if (score >= 5 && timeAtScoreFive === 0) {
+    timeAtScoreFive = millis();
+    duringTime = (timeAtScoreFive - timeAtScoreZero) / 1000;
+  }
+
+  if (score >= 5) {
+    isGameOver = true;
+    fill(255, 0, 0);
+    textSize(30);
+    text("Game Over", width / 2 - 50, height / 2);
+    text(
+      `Time : ${duringTime.toFixed(2)}s`,
+      width / 2 - 100,
+      height / 2 + 50
+    );
+    OverGame();
+  }
 }
 
 function keyPressed() {
@@ -96,6 +128,9 @@ function keyPressed() {
     pressStartTimeBox = millis();
     isSpaceDownCircle = true;
     pressStartTimeCircle = millis();
+    if (startTime === 0) {
+      startTime = millis();
+    }
   }
 }
 
@@ -105,6 +140,9 @@ function keyReleased() {
     boxWidth = initialBoxWidth;
     isSpaceDownCircle = false;
     resetGame();
+    endTime = millis();
+    elapsedTime = (endTime - startTime) / 1000;
+    startTime = 0;
   }
 }
 
@@ -118,6 +156,21 @@ function resetGame() {
   initialCircleY = random(groundLevel);
   circleX = initialCircleX;
   circleY = initialCircleY;
+  elapsedTime = 0; // Reset the elapsed time to 0
+}
+
+
+function OverGame() {
+  initialBoxX = random(1000);
+  initialBoxY = random(1000);
+  boxX = 1000;
+  boxY = 1000;
+  boxWidth = initialBoxWidth;
+  initialCircleX = random(1000);
+  initialCircleY = random(1000);
+  circleX = initialCircleX;
+  circleY = initialCircleY;
+  elapsedTime = 0; // Reset the elapsed time to 0
 }
 
 function increaseScore() {
