@@ -47,7 +47,7 @@ function draw() {
   background(220);
 
   fill(150);
-  rect(0, groundLevel, width, height);
+  //rect(0, groundLevel, width, height);
 
   fill(boxColor);
   rect(boxX, boxY, boxWidth, boxHeight);
@@ -86,8 +86,8 @@ function draw() {
   }
 
   fill(0);
-  textSize(20);
-  text(`Score: ${score}`, width - 150, 30);
+  textSize(10);
+  text(`Score: ${score}`, width - 50, 15);
 }
 
 function keyPressed() {
@@ -104,6 +104,7 @@ function keyReleased() {
     isSpaceDownBox = false;
     boxWidth = initialBoxWidth;
     isSpaceDownCircle = false;
+    resetGame();
   }
 }
 
