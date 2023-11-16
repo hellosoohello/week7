@@ -30,14 +30,26 @@ let isGameOver = false;
 let hasCollided = false;
 let isResetting = false;
 
+//image
+let backgroundImage; 
+
 
 //time
 let timeAtScoreZero = 0;
 let timeAtScoreFive = 0;
 let duringTime = 0;
 
+function preload() {
+  //backgroundImage = loadImage('/Users/sue/Desktop/for.jpg'); // Replace 'path/to/your/image.jpg' with the actual path to your image file
+}
+
 function setup() {
   createCanvas(400, 400);
+  boxColor = color(0, 0, 255);
+  circleColor = color(255, 255, 0);
+  groundLevel = height - initialBoxHeight;
+  //image(backgroundImage, 0, 0, width, height);
+
   boxColor = color(0, 0, 255);
   circleColor = color(255, 255, 0);
   groundLevel = height - initialBoxHeight;
@@ -56,6 +68,7 @@ function setup() {
 
 function draw() {
   background(220);
+  //image(backgroundImage, 0, 0, width, height);
 
   fill(150);
   //rect(0, groundLevel, width, height);
@@ -105,6 +118,12 @@ function draw() {
   textSize(10);
   text(`Score: ${score}`, width - 50, 15);
   text(`Time: ${elapsedTime.toFixed(2)}s`, 10, 15); // Display time in seconds with 2 decimal places
+  fill(22);
+
+  text('The student is trying to escape from the assignments.', 10, 380);
+  text('Please block their way with an enormous amount of tasks. The quickest catcher wins!', 10, 390);
+
+
 
   if (score === 0 && timeAtScoreZero === 0) {
     timeAtScoreZero = millis();
@@ -185,13 +204,13 @@ function resetGame() {
 
 
 function OverGame() {
-  initialBoxX = random(1000);
-  initialBoxY = random(1000);
+  initialBoxX = random(350);
+  initialBoxY = random(350);
   boxX = 1000;
   boxY = 1000;
   boxWidth = initialBoxWidth;
-  initialCircleX = random(1000);
-  initialCircleY = random(1000);
+  initialCircleX = random(350);
+  initialCircleY = random(350);
   circleX = initialCircleX;
   circleY = initialCircleY;
   elapsedTime = 0; // Reset the elapsed time to 0
