@@ -28,6 +28,8 @@ let elapsedTime = 0;
 let isGameOver = false;
 
 let hasCollided = false;
+let isResetting = false;
+
 
 //time
 let timeAtScoreZero = 0;
@@ -85,6 +87,11 @@ function draw() {
   ) {
     increaseScore();
     hasCollided = true;
+    if (!isResetting) {
+      isResetting = true;
+      setTimeout(resetGame, 5000); // Pause for 2000 milliseconds (2 seconds) before restarting the game
+    }    
+    resetGame();
   } else if (
     circleY > boxY + boxHeight ||
     circleY + circleSize < boxY ||
@@ -120,6 +127,23 @@ function draw() {
     );
     OverGame();
   }
+}
+
+function resetGame() {
+  initialBoxX = random(width - initialBoxWidth);
+  initialBoxY = random(groundLevel);
+  boxX = initialBoxX;
+  boxY = initialBoxY;
+  boxWidth = initialBoxWidth;
+  initialCircleX = random(width);
+  initialCircleY = random(groundLevel);
+  circleX = initialCircleX;
+  circleY = initialCircleY;
+  elapsedTime = 0;
+  score = 0; // Reset score to 0 when restarting the game
+  hasCollided = false; // Reset collision flag
+  isGameOver = false; // Reset game over flag
+  isResetting = false;
 }
 
 function keyPressed() {
